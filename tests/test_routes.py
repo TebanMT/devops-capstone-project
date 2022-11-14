@@ -95,6 +95,7 @@ class TestAccountService(TestCase):
             content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(repr(account),"<Account {} id=[{}]>".format(account.name,account.id))
 
         # Make sure location header is set
         location = response.headers.get("Location", None)
@@ -124,3 +125,20 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     # ADD YOUR TEST CASES HERE ...
+
+    def test_read_an_account(self):
+        "It should read a single account from the database"
+        account = self._create_accounts(1)[0]
+        route = BASE_URL+"/{}".format(account.id)
+        resp = self.client.get(route, content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        account_readed = resp.get_json()
+        self.assertEqual(account_readed['id'], account.id)
+        self.assertEqual(account_readed["name"], account.name)
+
+    def test_get_account_not_found(self):
+        "It should not find an account from the database"
+        route = BASE_URL+"/{}".format(0)
+        resp = self.client.get(route, content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(resp.get_json()["message"], "404 Not Found: Account [0] not found")
