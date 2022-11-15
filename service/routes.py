@@ -18,6 +18,11 @@ def health():
     """Health Status"""
     return jsonify(dict(status="OK")), status.HTTP_200_OK
 
+@app.route("/error")
+def error():
+    """Error Status"""
+    abort(status.HTTP_500_INTERNAL_SERVER_ERROR, "Server Error")
+
 
 ######################################################################
 # GET INDEX
