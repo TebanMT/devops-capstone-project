@@ -201,3 +201,13 @@ class TestAccountService(TestCase):
         """It should not delete an account that doesn't exist"""
         resp = self.client.delete(f"{BASE_URL}/{1}", content_type="application/json")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_method_not_allowed(self):
+        """It should not allow an illegal method call"""
+        resp = self.client.delete(BASE_URL)
+        self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_internal_server_error(self):
+        """It should response 500 for internal server errors"""
+        resp = self.client.get("/error")
+        self.assertEqual(resp.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
