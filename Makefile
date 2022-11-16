@@ -56,7 +56,7 @@ tests: ## Run the unit tests
 
 run: ## Run the service
 	$(info Starting service...)
-	honcho start
+	honcho start -p 3000
 
 dbrm: ## Stop and remove PostgreSQL in Docker
 	$(info Stopping and removing PostgreSQL...)
