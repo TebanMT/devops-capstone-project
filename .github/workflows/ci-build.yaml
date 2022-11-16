@@ -9,16 +9,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-lastest
-    container: python3.9-slim
+    runs-on: ubuntu-latest
+    container: python:3.9-slim
 
     services:
       postgres:
-        image: postgres:latest-alpine
+        image: postgres:latest
         ports:
           - 5432:5432
         env:
-          POSTGRES_PASSWROD: pgs3cr3t
+          POSTGRES_PASSWORD: pgs3cr3t
           POSTGRES_DB: testdb
         options: >-
           --health-cmd pg_isready
