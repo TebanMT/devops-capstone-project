@@ -18,6 +18,7 @@ def health():
     """Health Status"""
     return jsonify(dict(status="OK")), status.HTTP_200_OK
 
+
 @app.route("/error")
 def error():
     """Error Status"""
@@ -66,6 +67,7 @@ def create_accounts():
 # LIST ALL ACCOUNTS
 ######################################################################
 
+
 @app.route("/accounts", methods=["GET"])
 def list_accounts():
     """
@@ -75,13 +77,14 @@ def list_accounts():
     app.logger.info("Request to list an Account")
     accounts = Account.all()
     if not accounts:
-        abort(status.HTTP_404_NOT_FOUND, f"Not Found Accounts")
+        abort(status.HTTP_404_NOT_FOUND, "Not Found Accounts")
     accounts = [a.serialize() for a in accounts]
     return jsonify(accounts), status.HTTP_200_OK
 
 ######################################################################
 # READ AN ACCOUNT
 ######################################################################
+
 
 @app.route("/accounts/<int:account_id>", methods=["GET"])
 def read_an_account(account_id):
@@ -96,12 +99,11 @@ def read_an_account(account_id):
     return account.serialize(), status.HTTP_200_OK
 
 
-
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
 ######################################################################
 
-@app.route("/accounts/<int:account_id>",methods=["PUT"])
+@app.route("/accounts/<int:account_id>", methods=["PUT"])
 def update_account(account_id):
     """
     Update an Account.
