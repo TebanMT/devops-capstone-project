@@ -23,7 +23,7 @@ csp = {
     ]
 }
 talisman = Talisman(app, content_security_policy=csp)
-talisman.force_https= False
+talisman.force_https = False
 CORS(app)
 
 # Import the routes After the Flask app is created
