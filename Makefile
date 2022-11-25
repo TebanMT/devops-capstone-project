@@ -56,7 +56,7 @@ tests: ## Run the unit tests
 
 run: ## Run the service
 	$(info Starting service...)
-	honcho start -p 3000
+	honcho start -p 8000
 
 dbrm: ## Stop and remove PostgreSQL in Docker
 	$(info Stopping and removing PostgreSQL...)
@@ -65,8 +65,8 @@ dbrm: ## Stop and remove PostgreSQL in Docker
 
 db: ## Run PostgreSQL in Docker
 	$(info Running PostgreSQL...)
-	docker run -d --name postgresql \
+	docker run --rm -d --name postgresql \
 		-p 5432:5432 \
-		-e POSTGRES_PASSWORD=postgres \
+		-e POSTGRES_PASSWORD=postgresql \
 		-v postgresql:/var/lib/postgresql/data \
 		postgres:alpine

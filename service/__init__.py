@@ -16,7 +16,14 @@ app = Flask(__name__)
 app.config.from_object(config)
 
 # Add talisman security
-talisman = Talisman(app)
+csp = {
+    'default-src': [
+        '\'self\'',
+        'localhost'
+    ]
+}
+talisman = Talisman(app, content_security_policy=csp)
+talisman.force_https= False
 CORS(app)
 
 # Import the routes After the Flask app is created
