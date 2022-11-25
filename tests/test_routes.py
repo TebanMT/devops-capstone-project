@@ -85,7 +85,7 @@ class TestAccountService(TestCase):
             'X-Frame-Options': 'SAMEORIGIN',
             'X-XSS-Protection': '1; mode=block',
             'X-Content-Type-Options': 'nosniff',
-            'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
+            'Content-Security-Policy': 'default-src \'self\' localhost',
             'Referrer-Policy': 'strict-origin-when-cross-origin'
         }
         for key, value in headers.items():
@@ -107,7 +107,7 @@ class TestAccountService(TestCase):
             content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(repr(account),"<Account {} id=[{}]>".format(account.name,account.id))
+        self.assertEqual(repr(account), "<Account {} id=[{}]>".format(account.name, account.id))
 
         # Make sure location header is set
         location = response.headers.get("Location", None)
@@ -188,7 +188,7 @@ class TestAccountService(TestCase):
         self._create_accounts(10)
         resp = self.client.get(f"{BASE_URL}", content_type="application/json")
         accounts = resp.get_json()
-        self.assertEqual(len(accounts),10)
+        self.assertEqual(len(accounts), 10)
 
     def test_list_all_accounts_not_found(self):
         """It should not list any accounts"""
